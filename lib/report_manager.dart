@@ -24,12 +24,19 @@ class _ReportManagerState extends State<ReportManager> {
   }
 
   @override
+  void didUpdateWidget(ReportManager oldWidget) {
+    // TODO: implement didUpdateWidget
+    super.didUpdateWidget(oldWidget);
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
         Container(
           margin: EdgeInsets.all(10.0),
           child: RaisedButton(
+            color: Theme.of(context).primaryColor,
             onPressed: () {
               setState(() {
                 _reports.add('Report Tester 2.0');
