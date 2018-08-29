@@ -5,7 +5,7 @@ import './reports.dart';
 class ReportManager extends StatefulWidget {
   final String startingReport;
 
-  ReportManager(this.startingReport);
+  ReportManager({this.startingReport = 'Review Tester'});
 
   @override
   State<StatefulWidget> createState() {
