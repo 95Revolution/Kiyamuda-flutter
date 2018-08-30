@@ -1,14 +1,21 @@
 import 'package:flutter/material.dart';
 
-class ReportWidget extends StatelessWidget {
+class ReportPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: Text('Report Detail'),
-        ),
-        body: Center(
-          child: Text("On the Report Page"),
-        ));
+      appBar: AppBar(
+        title: Text('Report Detail'),
+      ),
+      body: Column(
+        children: <Widget>[
+          Text('Details!'),
+          RaisedButton(
+            child: Text('BACK'),
+            onPressed: () => Navigator.pop(context),
+          )
+        ],
+      ),
+    );
   }
 }
