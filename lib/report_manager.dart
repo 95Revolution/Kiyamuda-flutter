@@ -44,7 +44,7 @@ class _ReportManagerState extends State<ReportManager> {
           margin: EdgeInsets.all(10.0),
           child: ReportControl(_addReport),
         ),
-        Reports(_reports)
+        Expanded(child: Reports(_reports))
       ],
     );
   }

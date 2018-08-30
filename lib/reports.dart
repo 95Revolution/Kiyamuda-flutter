@@ -7,7 +7,7 @@ class Reports extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
+    return ListView(
       children: reports
           .map(
             (element) => Card(
