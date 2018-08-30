@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import './reports.dart';
+import './report_control.dart';
 
 class ReportManager extends StatefulWidget {
   final String startingReport;
@@ -29,21 +30,19 @@ class _ReportManagerState extends State<ReportManager> {
     super.didUpdateWidget(oldWidget);
   }
 
+  void _addReport(String report) {
+    setState(() {
+      _reports.add(report);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
         Container(
           margin: EdgeInsets.all(10.0),
-          child: RaisedButton(
-            color: Theme.of(context).primaryColor,
-            onPressed: () {
-              setState(() {
-                _reports.add('Report Tester 2.0');
-              });
-            },
-            child: Text('Report It!'),
-          ),
+          child: ReportControl(_addReport),
         ),
         Reports(_reports)
       ],
