@@ -23,7 +23,7 @@ class MyApp extends StatelessWidget {
           appBar: AppBar(
             title: Text('Kiyamuda'),
           ),
-          body: ReportManager(startingReport: 'Report Tester')),
+          body: ReportManager()),
     );
   }
 }

@@ -18,9 +18,13 @@ class Reports extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
-      itemBuilder: _buildReportItem,
-      itemCount: reports.length,
-    );
+    return reports.length > 0
+        ? ListView.builder(
+            itemBuilder: _buildReportItem,
+            itemCount: reports.length,
+          )
+        : Center(
+            child: Text("No Reports Found, Add a Report :)"),
+          );
   }
 }
