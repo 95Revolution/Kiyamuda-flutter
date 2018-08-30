@@ -10,7 +10,16 @@ class Reports extends StatelessWidget {
       child: Column(
         children: <Widget>[
           Image.asset('assets/food.jpg'),
-          Text(reports[index])
+          Text(reports[index]),
+          ButtonBar(
+            alignment: MainAxisAlignment.center,
+            children: <Widget>[
+              FlatButton(
+                child: Text("Details"),
+                onPressed: () => {},
+              )
+            ],
+          )
         ],
       ),
     );
