@@ -5,21 +5,34 @@ class Reports extends StatelessWidget {
 
   Reports([this.reports = const []]);
 
+  Widget _buildReportItem(BuildContext context, int index) {
+    return Card(
+      child: Column(
+        children: <Widget>[
+          Image.asset('assets/food.jpg'),
+          Text(reports[index])
+        ],
+      ),
+    );
+  }
+
+  Widget _buildReportList() {
+    Widget reportCards;
+    if (reports.length > 0) {
+      reportCards = ListView.builder(
+        itemBuilder: _buildReportItem,
+        itemCount: reports.length,
+      );
+    } else {
+      reportCards = Center(
+        child: Text("No Reports Found, Add a Report :)"),
+      );
+    }
+    return reportCards;
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: reports
-          .map(
-            (element) => Card(
-                  child: Column(
-                    children: <Widget>[
-                      Image.asset('assets/food.jpg'),
-                      Text(element)
-                    ],
-                  ),
-                ),
-          )
-          .toList(),
-    );
+    return _buildReportList();
   }
 }

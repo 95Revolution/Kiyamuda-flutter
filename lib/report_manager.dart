@@ -6,7 +6,7 @@ import './report_control.dart';
 class ReportManager extends StatefulWidget {
   final String startingReport;
 
-  ReportManager({this.startingReport = 'Review Tester'});
+  ReportManager({this.startingReport});
 
   @override
   State<StatefulWidget> createState() {
@@ -21,7 +21,9 @@ class _ReportManagerState extends State<ReportManager> {
   @override
   void initState() {
     super.initState();
-    _reports.add(widget.startingReport);
+    if (widget.startingReport != null) {
+      _reports.add(widget.startingReport);
+    }
   }
 
   @override
@@ -44,7 +46,7 @@ class _ReportManagerState extends State<ReportManager> {
           margin: EdgeInsets.all(10.0),
           child: ReportControl(_addReport),
         ),
-        Reports(_reports)
+        Expanded(child: Reports(_reports))
       ],
     );
   }
