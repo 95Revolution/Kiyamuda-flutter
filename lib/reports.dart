@@ -16,15 +16,21 @@ class Reports extends StatelessWidget {
     );
   }
 
+  Widget _buildReportList() {
+    Widget reportCard = Center(
+      child: Text("No Reports Found, Add a Report :)"),
+    );
+    if (reports.length > 0) {
+      reportCard = ListView.builder(
+        itemBuilder: _buildReportItem,
+        itemCount: reports.length,
+      );
+    }
+    return reportCard;
+  }
+
   @override
   Widget build(BuildContext context) {
-    return reports.length > 0
-        ? ListView.builder(
-            itemBuilder: _buildReportItem,
-            itemCount: reports.length,
-          )
-        : Center(
-            child: Text("No Reports Found, Add a Report :)"),
-          );
+    return _buildReportList();
   }
 }
