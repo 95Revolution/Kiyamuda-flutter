@@ -63,6 +63,11 @@ class _MyAppState extends State<MyApp> {
         }
         return null;
       },
+      onUnknownRoute: (RouteSettings settings) {
+        return MaterialPageRoute(
+            builder: (BuildContext context) =>
+                ReportsPage(_reports, _addReport, _deleteReport));
+      },
     );
   }
 }
