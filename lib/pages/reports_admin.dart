@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 
-import '../report_manager.dart';
-import './reports_admin.dart';
+import './reports.dart';
 
-class ReportsPage extends StatelessWidget {
+class ReportsAdminPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -15,21 +14,22 @@ class ReportsPage extends StatelessWidget {
                 title: Text('Choose'),
               ),
               ListTile(
-                title: Text('Manage Reports'),
+                title: Text('All Products'),
                 onTap: () {
                   Navigator.pushReplacement(
                       context,
                       MaterialPageRoute(
-                          builder: (BuildContext context) =>
-                              ReportsAdminPage()));
+                          builder: (BuildContext context) => ReportsPage()));
                 },
               )
             ],
           ),
         ),
         appBar: AppBar(
-          title: Text('Kiyamuda'),
+          title: Text('Manage Reports'),
         ),
-        body: ReportManager());
+        body: Center(
+          child: Text('Manage Your Reports'),
+        ));
   }
 }
