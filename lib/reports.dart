@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import './pages/report.dart';
 
 class Reports extends StatelessWidget {
-  final List<String> reports;
+  final List<Map<String, String>> reports;
 
   Reports([this.reports = const []]);
 
@@ -11,8 +11,8 @@ class Reports extends StatelessWidget {
     return Card(
       child: Column(
         children: <Widget>[
-          Image.asset('assets/food.jpg'),
-          Text(reports[index]),
+          Image.asset(reports[index]['image']),
+          Text(reports[index]['title']),
           ButtonBar(
             alignment: MainAxisAlignment.center,
             children: <Widget>[
@@ -21,7 +21,8 @@ class Reports extends StatelessWidget {
                 onPressed: () => Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (BuildContext context) => ReportPage(),
+                        builder: (BuildContext context) => ReportPage(
+                            reports[index]['title'], reports[index]['image']),
                       ),
                     ),
               ),

@@ -4,7 +4,7 @@ import './reports.dart';
 import './report_control.dart';
 
 class ReportManager extends StatefulWidget {
-  final String startingReport;
+  final Map<String, String> startingReport;
 
   ReportManager({this.startingReport});
 
@@ -16,7 +16,7 @@ class ReportManager extends StatefulWidget {
 }
 
 class _ReportManagerState extends State<ReportManager> {
-  List<String> _reports = [];
+  List<Map<String, String>> _reports = [];
 
   @override
   void initState() {
@@ -32,7 +32,7 @@ class _ReportManagerState extends State<ReportManager> {
     super.didUpdateWidget(oldWidget);
   }
 
-  void _addReport(String report) {
+  void _addReport(Map<String, String> report) {
     setState(() {
       _reports.add(report);
     });
