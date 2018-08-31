@@ -20,13 +20,7 @@ class Reports extends StatelessWidget {
               FlatButton(
                 child: Text("Details"),
                 onPressed: () => Navigator
-                        .push<bool>(
-                      context,
-                      MaterialPageRoute(
-                        builder: (BuildContext context) => ReportPage(
-                            reports[index]['title'], reports[index]['image']),
-                      ),
-                    )
+                        .pushNamed<bool>(context, '/report/' + index.toString())
                         .then((bool value) {
                       if (value) {
                         deleteReport(index);

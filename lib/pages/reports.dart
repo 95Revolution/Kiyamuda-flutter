@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
 
 import '../report_manager.dart';
-//import './reports_admin.dart';
 
 class ReportsPage extends StatelessWidget {
+  final List<Map<String, String>> reports;
+  final Function addReport;
+  final Function deleteReport;
+
+  ReportsPage(this.reports, this.addReport, this.deleteReport);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -26,6 +31,6 @@ class ReportsPage extends StatelessWidget {
         appBar: AppBar(
           title: Text('Kiyamuda'),
         ),
-        body: ReportManager());
+        body: ReportManager(reports, addReport, deleteReport));
   }
 }

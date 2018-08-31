@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import './pages/auth.dart';
 import './pages/reports_admin.dart';
 import './pages/reports.dart';
+import './pages/report.dart';
 
 void main() {
   // debugPaintSizeEnabled = true;
@@ -12,7 +13,28 @@ void main() {
   runApp(MyApp());
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
+  @override
+  State<StatefulWidget> createState() {
+    return _MyAppState();
+  }
+}
+
+class _MyAppState extends State<MyApp> {
+  List<Map<String, String>> _reports = [];
+
+  void _addReport(Map<String, String> report) {
+    setState(() {
+      _reports.add(report);
+    });
+  }
+
+  void _deleteReport(int index) {
+    setState(() {
+      _reports.removeAt(index);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -23,8 +45,23 @@ class MyApp extends StatelessWidget {
           accentColor: Colors.deepPurple),
       //home: AuthPage(),
       routes: {
-        '/': (BuildContext context) => ReportsPage(),
+        '/': (BuildContext context) =>
+            ReportsPage(_reports, _addReport, _deleteReport),
         '/admin': (BuildContext context) => ReportsAdminPage()
+      },
+      onGenerateRoute: (RouteSettings settings) {
+        final List<String> pathElements = settings.name.split('/');
+        if (pathElements[0] != '') {
+          return null;
+        }
+        if (pathElements[1] == 'report') {
+          final int index = int.parse(pathElements[2]);
+          return MaterialPageRoute<bool>(
+            builder: (BuildContext context) =>
+                ReportPage(_reports[index]['title'], _reports[index]['image']),
+          );
+        }
+        return null;
       },
     );
   }
