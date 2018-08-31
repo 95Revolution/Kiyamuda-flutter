@@ -10,7 +10,7 @@ class ReportControl extends StatelessWidget {
     return RaisedButton(
       color: Theme.of(context).primaryColor,
       onPressed: () {
-        addReport('Reports');
+        addReport({'title': 'Wastage', 'image': 'assets/food.jpg'});
       },
       child: Text('Report It!'),
     );

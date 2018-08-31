@@ -1,16 +1,34 @@
 import 'package:flutter/material.dart';
 
-class Reports extends StatelessWidget {
-  final List<String> reports;
+import './pages/report.dart';
 
-  Reports([this.reports = const []]);
+class Reports extends StatelessWidget {
+  final List<Map<String, String>> reports;
+  final Function deleteReport;
+
+  Reports(this.reports, {this.deleteReport});
 
   Widget _buildReportItem(BuildContext context, int index) {
     return Card(
       child: Column(
         children: <Widget>[
-          Image.asset('assets/food.jpg'),
-          Text(reports[index])
+          Image.asset(reports[index]['image']),
+          Text(reports[index]['title']),
+          ButtonBar(
+            alignment: MainAxisAlignment.center,
+            children: <Widget>[
+              FlatButton(
+                child: Text("Details"),
+                onPressed: () => Navigator
+                        .pushNamed<bool>(context, '/report/' + index.toString())
+                        .then((bool value) {
+                      if (value) {
+                        deleteReport(index);
+                      }
+                    }),
+              ),
+            ],
+          )
         ],
       ),
     );
