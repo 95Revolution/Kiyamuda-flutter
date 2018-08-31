@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../report_manager.dart';
-import './reports_admin.dart';
+//import './reports_admin.dart';
 
 class ReportsPage extends StatelessWidget {
   @override
@@ -17,11 +17,7 @@ class ReportsPage extends StatelessWidget {
               ListTile(
                 title: Text('Manage Reports'),
                 onTap: () {
-                  Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(
-                          builder: (BuildContext context) =>
-                              ReportsAdminPage()));
+                  Navigator.pushReplacementNamed(context, '/admin');
                 },
               )
             ],
