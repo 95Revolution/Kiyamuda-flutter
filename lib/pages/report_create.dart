@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 
 class ReportCreatePage extends StatefulWidget {
+  final Function addReport;
+
+  ReportCreatePage(this.addReport);
+
   @override
   State<StatefulWidget> createState() {
     return _ReportCreatePage();
@@ -16,7 +20,7 @@ class _ReportCreatePage extends State<ReportCreatePage> {
   Widget build(BuildContext context) {
     return Container(
       margin: EdgeInsets.all(10.0),
-      child: Column(
+      child: ListView(
         children: <Widget>[
           TextField(
             decoration: InputDecoration(labelText: 'Report Title'),
@@ -44,6 +48,18 @@ class _ReportCreatePage extends State<ReportCreatePage> {
               });
             },
           ),
+          RaisedButton(
+            child: Text('Save'),
+            onPressed: () {
+              final Map<String, dynamic> report = {
+                'title': titleValue,
+                'description': descriptionValue,
+                'rate': rateValue,
+                'image': 'assets/food.jpg'
+              };
+              widget.addReport(report);
+            },
+          )
         ],
       ),
     );
