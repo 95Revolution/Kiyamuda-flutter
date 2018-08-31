@@ -38,6 +38,12 @@ class _ReportManagerState extends State<ReportManager> {
     });
   }
 
+  void _deleteReport(int index) {
+    setState(() {
+      _reports.removeAt(index);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -46,7 +52,7 @@ class _ReportManagerState extends State<ReportManager> {
           margin: EdgeInsets.all(10.0),
           child: ReportControl(_addReport),
         ),
-        Expanded(child: Reports(_reports))
+        Expanded(child: Reports(_reports, deleteReport: _deleteReport))
       ],
     );
   }
