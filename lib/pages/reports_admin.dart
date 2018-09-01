@@ -2,12 +2,13 @@ import 'package:flutter/material.dart';
 
 import './report_edit.dart';
 import './report_list.dart';
+import '../models/report.dart';
 
 class ReportsAdminPage extends StatelessWidget {
   final Function addReport;
   final Function updateReport;
   final Function deleteReport;
-  final List<Map<String, dynamic>> reports;
+  final List<Report> reports;
 
   ReportsAdminPage(
       this.addReport, this.updateReport, this.deleteReport, this.reports);

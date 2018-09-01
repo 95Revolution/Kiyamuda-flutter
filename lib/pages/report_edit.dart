@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 
 import '../widgets/helpers/ensure-visible.dart';
+import '../models/report.dart';
 
 class ReportEditPage extends StatefulWidget {
   final Function addReport;
   final Function updateReport;
-  final Map<String, dynamic> report;
+  final Report report;
   final int reportIndex;
 
   ReportEditPage(
@@ -35,7 +36,7 @@ class _ReportEditPage extends State<ReportEditPage> {
       child: TextFormField(
         focusNode: _titleFocusNode,
         decoration: InputDecoration(labelText: 'Report Title'),
-        initialValue: widget.report == null ? '' : widget.report['title'],
+        initialValue: widget.report == null ? '' : widget.report.title,
         validator: (String value) {
           if (value.isEmpty) {
             return 'Title is required';
@@ -55,7 +56,7 @@ class _ReportEditPage extends State<ReportEditPage> {
         focusNode: _descriptionFocusNode,
         maxLines: 4,
         decoration: InputDecoration(labelText: 'Report Description'),
-        initialValue: widget.report == null ? '' : widget.report['description'],
+        initialValue: widget.report == null ? '' : widget.report.description,
         validator: (String value) {
           if (value.isEmpty || value.length < 10) {
             return 'Description is required and should be 10+ characters long';
@@ -76,7 +77,7 @@ class _ReportEditPage extends State<ReportEditPage> {
         keyboardType: TextInputType.number,
         decoration: InputDecoration(labelText: 'Rate it'),
         initialValue:
-            widget.report == null ? '' : widget.report['rate'].toString(),
+            widget.report == null ? '' : widget.report.rate.toString(),
         validator: (String value) {
           if (value.isEmpty ||
               !RegExp(r'^(?:[1-9]\d*|0)?(?:\.\d+)?$').hasMatch(value)) {
@@ -129,9 +130,19 @@ class _ReportEditPage extends State<ReportEditPage> {
     }
     _formKey.currentState.save();
     if (widget.report == null) {
-      widget.addReport(_formData);
+      widget.addReport(Report(
+          title: _formData['title'],
+          description: _formData['description'],
+          rate: _formData['rate'],
+          image: _formData['image']));
     } else {
-      widget.updateReport(widget.reportIndex, _formData);
+      widget.updateReport(
+          widget.reportIndex,
+          Report(
+              title: _formData['title'],
+              description: _formData['description'],
+              rate: _formData['rate'],
+              image: _formData['image']));
     }
     Navigator.pushReplacementNamed(context, '/reports');
   }

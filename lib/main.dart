@@ -5,6 +5,7 @@ import './pages/auth.dart';
 import './pages/reports_admin.dart';
 import './pages/reports.dart';
 import './pages/report.dart';
+import './models/report.dart';
 
 void main() {
   // debugPaintSizeEnabled = true;
@@ -21,15 +22,15 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  List<Map<String, dynamic>> _reports = [];
+  List<Report> _reports = [];
 
-  void _addReport(Map<String, dynamic> report) {
+  void _addReport(Report report) {
     setState(() {
       _reports.add(report);
     });
   }
 
-  void _updateReport(int index, Map<String, dynamic> report) {
+  void _updateReport(int index, Report report) {
     setState(() {
       _reports[index] = report;
     });
@@ -67,10 +68,10 @@ class _MyAppState extends State<MyApp> {
           final int index = int.parse(pathElements[2]);
           return MaterialPageRoute<bool>(
             builder: (BuildContext context) => ReportPage(
-                _reports[index]['title'],
-                _reports[index]['image'],
-                _reports[index]['rate'],
-                _reports[index]['description']),
+                _reports[index].title,
+                _reports[index].image,
+                _reports[index].rate,
+                _reports[index].description),
           );
         }
         return null;

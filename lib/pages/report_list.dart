@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 
 import './report_edit.dart';
+import '../models/report.dart';
 
 class ReportListPage extends StatelessWidget {
   final Function updateReport;
   final Function deleteReport;
-  final List<Map<String, dynamic>> reports;
+  final List<Report> reports;
 
   ReportListPage(this.reports, this.updateReport, this.deleteReport);
 
@@ -33,7 +34,7 @@ class ReportListPage extends StatelessWidget {
     return ListView.builder(
       itemBuilder: (BuildContext context, int index) {
         return Dismissible(
-          key: Key(reports[index]['title']),
+          key: Key(reports[index].title),
           onDismissed: (DismissDirection direction) {
             if (direction == DismissDirection.endToStart) {
               deleteReport(index);
@@ -46,10 +47,10 @@ class ReportListPage extends StatelessWidget {
             children: <Widget>[
               ListTile(
                 leading: CircleAvatar(
-                  backgroundImage: AssetImage(reports[index]['image']),
+                  backgroundImage: AssetImage(reports[index].image),
                 ),
-                title: Text(reports[index]['title']),
-                subtitle: Text('Rating : ${reports[index]['rate']}'),
+                title: Text(reports[index].title),
+                subtitle: Text('Rating : ${reports[index].rate}'),
                 trailing: _buildEditButton(context, index),
               ),
               Divider(),

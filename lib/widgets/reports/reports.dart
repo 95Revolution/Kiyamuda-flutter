@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 
 import './report_card.dart';
+import '../../models/report.dart';
 
 class Reports extends StatelessWidget {
-  final List<Map<String, dynamic>> reports;
+  final List<Report> reports;
 
   Reports(this.reports);
 
