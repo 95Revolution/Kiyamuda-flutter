@@ -9,6 +9,25 @@ class ReportListPage extends StatelessWidget {
 
   ReportListPage(this.reports, this.updateReport, this.deleteReport);
 
+  Widget _buildEditButton(BuildContext context, int index) {
+    return IconButton(
+      icon: Icon(Icons.edit),
+      onPressed: () {
+        Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (BuildContext context) {
+              return ReportEditPage(
+                report: reports[index],
+                updateReport: updateReport,
+                reportIndex: index,
+              );
+            },
+          ),
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
@@ -31,22 +50,7 @@ class ReportListPage extends StatelessWidget {
                 ),
                 title: Text(reports[index]['title']),
                 subtitle: Text('Rating : ${reports[index]['rate']}'),
-                trailing: IconButton(
-                  icon: Icon(Icons.edit),
-                  onPressed: () {
-                    Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (BuildContext context) {
-                          return ReportEditPage(
-                            report: reports[index],
-                            updateReport: updateReport,
-                            reportIndex: index,
-                          );
-                        },
-                      ),
-                    );
-                  },
-                ),
+                trailing: _buildEditButton(context, index),
               ),
               Divider(),
             ],
