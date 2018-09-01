@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 
 import './report_edit.dart';
 import './report_list.dart';
-import '../models/report.dart';
 
 class ReportsAdminPage extends StatelessWidget {
   Widget _buildSideDrawer(BuildContext context) {
@@ -47,10 +46,7 @@ class ReportsAdminPage extends StatelessWidget {
           ),
         ),
         body: TabBarView(
-          children: <Widget>[
-            ReportEditPage(),
-            ReportListPage(null, null, null)
-          ],
+          children: <Widget>[ReportEditPage(), ReportListPage()],
         ),
       ),
     );

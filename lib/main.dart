@@ -7,7 +7,6 @@ import './pages/auth.dart';
 import './pages/reports_admin.dart';
 import './pages/reports.dart';
 import './pages/report.dart';
-import './models/report.dart';
 import './scoped-models/reports.dart';
 
 void main() {
