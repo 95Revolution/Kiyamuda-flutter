@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 
+import 'package:scoped_model/scoped_model.dart';
+
 import '../widgets/helpers/ensure-visible.dart';
 import '../models/report.dart';
+import '../scoped-models/reports.dart';
 
 class ReportEditPage extends StatefulWidget {
   final Function addReport;
@@ -91,6 +94,18 @@ class _ReportEditPage extends State<ReportEditPage> {
     );
   }
 
+  Widget _buildSubmitButton() {
+    return ScopedModelDescendant<ReportsModel>(
+      builder: (BuildContext context, Widget child, ReportsModel model) {
+        return RaisedButton(
+          child: Text('Save'),
+          textColor: Colors.white,
+          onPressed: () => _submitForm(model.addReport, model.updateReport),
+        );
+      },
+    );
+  }
+
   Widget _buildPageContent(BuildContext context) {
     final double deviceWidth = MediaQuery.of(context).size.width;
     final double targetWidth = deviceWidth > 550.0 ? 500.0 : deviceWidth * 0.95;
@@ -112,11 +127,7 @@ class _ReportEditPage extends State<ReportEditPage> {
               SizedBox(
                 height: 10.0,
               ),
-              RaisedButton(
-                child: Text('Save'),
-                textColor: Colors.white,
-                onPressed: _submitForm,
-              )
+              _buildSubmitButton(),
             ],
           ),
         ),
@@ -124,19 +135,19 @@ class _ReportEditPage extends State<ReportEditPage> {
     );
   }
 
-  void _submitForm() {
+  void _submitForm(Function addReport, Function updateReport) {
     if (!_formKey.currentState.validate()) {
       return;
     }
     _formKey.currentState.save();
     if (widget.report == null) {
-      widget.addReport(Report(
+      addReport(Report(
           title: _formData['title'],
           description: _formData['description'],
           rate: _formData['rate'],
           image: _formData['image']));
     } else {
-      widget.updateReport(
+      updateReport(
           widget.reportIndex,
           Report(
               title: _formData['title'],

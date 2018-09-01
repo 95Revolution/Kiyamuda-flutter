@@ -1,13 +1,8 @@
 import 'package:flutter/material.dart';
 
 import '../widgets/reports/reports.dart';
-import '../models/report.dart';
 
 class ReportsPage extends StatelessWidget {
-  final List<Report> reports;
-
-  ReportsPage(this.reports);
-
   Widget _buildSideDrawer(BuildContext context) {
     return Drawer(
       child: Column(
@@ -41,7 +36,7 @@ class ReportsPage extends StatelessWidget {
           )
         ],
       ),
-      body: Reports(reports),
+      body: Reports(),
     );
   }
 }

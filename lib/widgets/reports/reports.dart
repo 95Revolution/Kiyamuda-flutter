@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
 
+import 'package:scoped_model/scoped_model.dart';
+
 import './report_card.dart';
 import '../../models/report.dart';
+import '../../scoped-models/reports.dart';
 
 class Reports extends StatelessWidget {
-  final List<Report> reports;
-
-  Reports(this.reports);
-
-  Widget _buildReportList() {
+  Widget _buildReportList(List<Report> reports) {
     Widget reportCards;
     if (reports.length > 0) {
       reportCards = ListView.builder(
@@ -26,6 +25,10 @@ class Reports extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return _buildReportList();
+    return ScopedModelDescendant<ReportsModel>(
+      builder: (BuildContext context, Widget child, ReportsModel model) {
+        return _buildReportList(model.reports);
+      },
+    );
   }
 }
