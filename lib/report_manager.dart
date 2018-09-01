@@ -1,25 +1,16 @@
 import 'package:flutter/material.dart';
 
 import './reports.dart';
-import './report_control.dart';
 
 class ReportManager extends StatelessWidget {
-  final List<Map<String, String>> reports;
-  final Function addReport;
-  final Function deleteReport;
+  final List<Map<String, dynamic>> reports;
 
-  ReportManager(this.reports, this.addReport, this.deleteReport);
+  ReportManager(this.reports);
 
   @override
   Widget build(BuildContext context) {
     return Column(
-      children: <Widget>[
-        Container(
-          margin: EdgeInsets.all(10.0),
-          child: ReportControl(addReport),
-        ),
-        Expanded(child: Reports(reports, deleteReport: deleteReport))
-      ],
+      children: <Widget>[Expanded(child: Reports(reports))],
     );
   }
 }

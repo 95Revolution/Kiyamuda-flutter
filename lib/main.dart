@@ -21,9 +21,9 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  List<Map<String, String>> _reports = [];
+  List<Map<String, dynamic>> _reports = [];
 
-  void _addReport(Map<String, String> report) {
+  void _addReport(Map<String, dynamic> report) {
     setState(() {
       _reports.add(report);
     });
@@ -45,9 +45,10 @@ class _MyAppState extends State<MyApp> {
           accentColor: Colors.deepPurple),
       //home: AuthPage(),
       routes: {
-        '/': (BuildContext context) =>
-            ReportsPage(_reports, _addReport, _deleteReport),
-        '/admin': (BuildContext context) => ReportsAdminPage()
+        '/': (BuildContext context) => AuthPage(),
+        '/reports': (BuildContext context) => ReportsPage(_reports),
+        '/admin': (BuildContext context) =>
+            ReportsAdminPage(_addReport, _deleteReport)
       },
       onGenerateRoute: (RouteSettings settings) {
         final List<String> pathElements = settings.name.split('/');
@@ -65,8 +66,7 @@ class _MyAppState extends State<MyApp> {
       },
       onUnknownRoute: (RouteSettings settings) {
         return MaterialPageRoute(
-            builder: (BuildContext context) =>
-                ReportsPage(_reports, _addReport, _deleteReport));
+            builder: (BuildContext context) => ReportsPage(_reports));
       },
     );
   }

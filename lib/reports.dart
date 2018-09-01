@@ -1,12 +1,9 @@
 import 'package:flutter/material.dart';
 
-import './pages/report.dart';
-
 class Reports extends StatelessWidget {
-  final List<Map<String, String>> reports;
-  final Function deleteReport;
+  final List<Map<String, dynamic>> reports;
 
-  Reports(this.reports, {this.deleteReport});
+  Reports(this.reports);
 
   Widget _buildReportItem(BuildContext context, int index) {
     return Card(
@@ -19,13 +16,8 @@ class Reports extends StatelessWidget {
             children: <Widget>[
               FlatButton(
                 child: Text("Details"),
-                onPressed: () => Navigator
-                        .pushNamed<bool>(context, '/report/' + index.toString())
-                        .then((bool value) {
-                      if (value) {
-                        deleteReport(index);
-                      }
-                    }),
+                onPressed: () => Navigator.pushNamed<bool>(
+                    context, '/report/' + index.toString()),
               ),
             ],
           )

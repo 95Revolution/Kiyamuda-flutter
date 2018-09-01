@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
 
-import './reports.dart';
 import './report_create.dart';
 import './report_list.dart';
 
 class ReportsAdminPage extends StatelessWidget {
+  final Function addReport;
+  final Function deleteReport;
+
+  ReportsAdminPage(this.addReport, this.deleteReport);
+
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
@@ -42,7 +46,7 @@ class ReportsAdminPage extends StatelessWidget {
           ),
         ),
         body: TabBarView(
-          children: <Widget>[ReportCreatePage(), ReportListPage()],
+          children: <Widget>[ReportCreatePage(addReport), ReportListPage()],
         ),
       ),
     );
