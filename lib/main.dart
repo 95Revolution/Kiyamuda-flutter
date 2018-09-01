@@ -40,9 +40,11 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
       // debugShowMaterialGrid: true,
       theme: ThemeData(
-          brightness: Brightness.light,
-          primarySwatch: Colors.deepOrange,
-          accentColor: Colors.deepPurple),
+        brightness: Brightness.light,
+        primarySwatch: Colors.deepOrange,
+        accentColor: Colors.deepPurple,
+        buttonColor: Colors.deepPurple,
+      ),
       //home: AuthPage(),
       routes: {
         '/': (BuildContext context) => AuthPage(),
@@ -58,8 +60,11 @@ class _MyAppState extends State<MyApp> {
         if (pathElements[1] == 'report') {
           final int index = int.parse(pathElements[2]);
           return MaterialPageRoute<bool>(
-            builder: (BuildContext context) =>
-                ReportPage(_reports[index]['title'], _reports[index]['image']),
+            builder: (BuildContext context) => ReportPage(
+                _reports[index]['title'],
+                _reports[index]['image'],
+                _reports[index]['rate'],
+                _reports[index]['description']),
           );
         }
         return null;

@@ -16,55 +16,72 @@ class _ReportCreatePage extends State<ReportCreatePage> {
   String _descriptionValue;
   double _rateValue;
 
+  Widget _buildTitleTextField() {
+    return TextField(
+      decoration: InputDecoration(labelText: 'Report Title'),
+      onChanged: (String value) {
+        setState(() {
+          _titleValue = value;
+        });
+      },
+    );
+  }
+
+  Widget _buildDescriptionTextField() {
+    return TextField(
+      maxLines: 4,
+      decoration: InputDecoration(labelText: 'Report Description'),
+      onChanged: (String value) {
+        setState(() {
+          _descriptionValue = value;
+        });
+      },
+    );
+  }
+
+  Widget _buildRateTextField() {
+    return TextField(
+      keyboardType: TextInputType.number,
+      decoration: InputDecoration(labelText: 'Rate it'),
+      onChanged: (String value) {
+        setState(() {
+          _rateValue = double.parse(value);
+        });
+      },
+    );
+  }
+
+  void _submitForm() {
+    final Map<String, dynamic> report = {
+      'title': _titleValue,
+      'description': _descriptionValue,
+      'rate': _rateValue,
+      'image': 'assets/food.jpg'
+    };
+    widget.addReport(report);
+    Navigator.pushReplacementNamed(context, '/reports');
+  }
+
   @override
   Widget build(BuildContext context) {
+    final double deviceWidth = MediaQuery.of(context).size.width;
+    final double targetWidth = deviceWidth > 550.0 ? 500.0 : deviceWidth * 0.95;
+    final double targetPadding = deviceWidth - targetWidth;
     return Container(
       margin: EdgeInsets.all(10.0),
       child: ListView(
+        padding: EdgeInsets.symmetric(horizontal: targetPadding / 2),
         children: <Widget>[
-          TextField(
-            decoration: InputDecoration(labelText: 'Report Title'),
-            onChanged: (String value) {
-              setState(() {
-                _titleValue = value;
-              });
-            },
-          ),
-          TextField(
-            maxLines: 4,
-            decoration: InputDecoration(labelText: 'Report Description'),
-            onChanged: (String value) {
-              setState(() {
-                _descriptionValue = value;
-              });
-            },
-          ),
-          TextField(
-            keyboardType: TextInputType.number,
-            decoration: InputDecoration(labelText: 'Rate it'),
-            onChanged: (String value) {
-              setState(() {
-                _rateValue = double.parse(value);
-              });
-            },
-          ),
+          _buildTitleTextField(),
+          _buildDescriptionTextField(),
+          _buildRateTextField(),
           SizedBox(
             height: 10.0,
           ),
           RaisedButton(
             child: Text('Save'),
-            color: Theme.of(context).accentColor,
             textColor: Colors.white,
-            onPressed: () {
-              final Map<String, dynamic> report = {
-                'title': _titleValue,
-                'description': _descriptionValue,
-                'rate': _rateValue,
-                'image': 'assets/food.jpg'
-              };
-              widget.addReport(report);
-              Navigator.pushReplacementNamed(context, '/reports');
-            },
+            onPressed: _submitForm,
           )
         ],
       ),
