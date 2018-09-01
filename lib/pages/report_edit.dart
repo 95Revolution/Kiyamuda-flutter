@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../widgets/helpers/ensure-visible.dart';
+
 class ReportEditPage extends StatefulWidget {
   final Function addReport;
   final Function updateReport;
@@ -23,53 +25,68 @@ class _ReportEditPage extends State<ReportEditPage> {
     'image': 'assets/food.jpg'
   };
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final _titleFocusNode = FocusNode();
+  final _descriptionFocusNode = FocusNode();
+  final _rateFocusNode = FocusNode();
 
   Widget _buildTitleTextField() {
-    return TextFormField(
-      decoration: InputDecoration(labelText: 'Report Title'),
-      initialValue: widget.report == null ? '' : widget.report['title'],
-      validator: (String value) {
-        if (value.isEmpty) {
-          return 'Title is required';
-        }
-      },
-      onSaved: (String value) {
-        _formData['title'] = value;
-      },
+    return EnsureVisibleWhenFocused(
+      focusNode: _titleFocusNode,
+      child: TextFormField(
+        focusNode: _titleFocusNode,
+        decoration: InputDecoration(labelText: 'Report Title'),
+        initialValue: widget.report == null ? '' : widget.report['title'],
+        validator: (String value) {
+          if (value.isEmpty) {
+            return 'Title is required';
+          }
+        },
+        onSaved: (String value) {
+          _formData['title'] = value;
+        },
+      ),
     );
   }
 
   Widget _buildDescriptionTextField() {
-    return TextFormField(
-      maxLines: 4,
-      decoration: InputDecoration(labelText: 'Report Description'),
-      initialValue: widget.report == null ? '' : widget.report['description'],
-      validator: (String value) {
-        if (value.isEmpty || value.length < 10) {
-          return 'Description is required and should be 10+ characters long';
-        }
-      },
-      onSaved: (String value) {
-        _formData['description'] = value;
-      },
+    return EnsureVisibleWhenFocused(
+      focusNode: _descriptionFocusNode,
+      child: TextFormField(
+        focusNode: _descriptionFocusNode,
+        maxLines: 4,
+        decoration: InputDecoration(labelText: 'Report Description'),
+        initialValue: widget.report == null ? '' : widget.report['description'],
+        validator: (String value) {
+          if (value.isEmpty || value.length < 10) {
+            return 'Description is required and should be 10+ characters long';
+          }
+        },
+        onSaved: (String value) {
+          _formData['description'] = value;
+        },
+      ),
     );
   }
 
   Widget _buildRateTextField() {
-    return TextFormField(
-      keyboardType: TextInputType.number,
-      decoration: InputDecoration(labelText: 'Rate it'),
-      initialValue:
-          widget.report == null ? '' : widget.report['rate'].toString(),
-      validator: (String value) {
-        if (value.isEmpty ||
-            !RegExp(r'^(?:[1-9]\d*|0)?(?:\.\d+)?$').hasMatch(value)) {
-          return 'Rate is required and should be a number';
-        }
-      },
-      onSaved: (String value) {
-        _formData['rate'] = double.parse(value);
-      },
+    return EnsureVisibleWhenFocused(
+      focusNode: _rateFocusNode,
+      child: TextFormField(
+        focusNode: _rateFocusNode,
+        keyboardType: TextInputType.number,
+        decoration: InputDecoration(labelText: 'Rate it'),
+        initialValue:
+            widget.report == null ? '' : widget.report['rate'].toString(),
+        validator: (String value) {
+          if (value.isEmpty ||
+              !RegExp(r'^(?:[1-9]\d*|0)?(?:\.\d+)?$').hasMatch(value)) {
+            return 'Rate is required and should be a number';
+          }
+        },
+        onSaved: (String value) {
+          _formData['rate'] = double.parse(value);
+        },
+      ),
     );
   }
 
