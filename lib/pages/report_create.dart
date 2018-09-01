@@ -12,9 +12,12 @@ class ReportCreatePage extends StatefulWidget {
 }
 
 class _ReportCreatePage extends State<ReportCreatePage> {
-  String _titleValue;
-  String _descriptionValue;
-  double _rateValue;
+  final Map<String, dynamic> _formData = {
+    'title': null,
+    'description': null,
+    'rate': null,
+    'image': 'assets/food.jpg'
+  };
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   Widget _buildTitleTextField() {
@@ -26,9 +29,7 @@ class _ReportCreatePage extends State<ReportCreatePage> {
         }
       },
       onSaved: (String value) {
-        setState(() {
-          _titleValue = value;
-        });
+        _formData['title'] = value;
       },
     );
   }
@@ -43,9 +44,7 @@ class _ReportCreatePage extends State<ReportCreatePage> {
         }
       },
       onSaved: (String value) {
-        setState(() {
-          _descriptionValue = value;
-        });
+        _formData['description'] = value;
       },
     );
   }
@@ -61,9 +60,7 @@ class _ReportCreatePage extends State<ReportCreatePage> {
         }
       },
       onSaved: (String value) {
-        setState(() {
-          _rateValue = double.parse(value);
-        });
+        _formData['rate'] = double.parse(value);
       },
     );
   }
@@ -73,13 +70,7 @@ class _ReportCreatePage extends State<ReportCreatePage> {
       return;
     }
     _formKey.currentState.save();
-    final Map<String, dynamic> report = {
-      'title': _titleValue,
-      'description': _descriptionValue,
-      'rate': _rateValue,
-      'image': 'assets/food.jpg'
-    };
-    widget.addReport(report);
+    widget.addReport(_formData);
     Navigator.pushReplacementNamed(context, '/reports');
   }
 
