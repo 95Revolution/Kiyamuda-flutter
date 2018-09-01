@@ -20,6 +20,11 @@ class _ReportCreatePage extends State<ReportCreatePage> {
   Widget _buildTitleTextField() {
     return TextFormField(
       decoration: InputDecoration(labelText: 'Report Title'),
+      validator: (String value) {
+        if (value.isEmpty) {
+          return 'Title is required';
+        }
+      },
       onSaved: (String value) {
         setState(() {
           _titleValue = value;
@@ -32,6 +37,11 @@ class _ReportCreatePage extends State<ReportCreatePage> {
     return TextFormField(
       maxLines: 4,
       decoration: InputDecoration(labelText: 'Report Description'),
+      validator: (String value) {
+        if (value.isEmpty || value.length < 10) {
+          return 'Description is required and should be 10+ characters long';
+        }
+      },
       onSaved: (String value) {
         setState(() {
           _descriptionValue = value;
@@ -44,6 +54,12 @@ class _ReportCreatePage extends State<ReportCreatePage> {
     return TextFormField(
       keyboardType: TextInputType.number,
       decoration: InputDecoration(labelText: 'Rate it'),
+      validator: (String value) {
+        if (value.isEmpty ||
+            !RegExp(r'^(?:[1-9]\d*|0)?(?:\.\d+)?$').hasMatch(value)) {
+          return 'Rate is required and should be a number';
+        }
+      },
       onSaved: (String value) {
         setState(() {
           _rateValue = double.parse(value);
@@ -53,6 +69,9 @@ class _ReportCreatePage extends State<ReportCreatePage> {
   }
 
   void _submitForm() {
+    if (!_formKey.currentState.validate()) {
+      return;
+    }
     _formKey.currentState.save();
     final Map<String, dynamic> report = {
       'title': _titleValue,
