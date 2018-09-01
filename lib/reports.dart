@@ -10,7 +10,10 @@ class Reports extends StatelessWidget {
       child: Column(
         children: <Widget>[
           Image.asset(reports[index]['image']),
-          Text(reports[index]['title']),
+          Container(
+            padding: EdgeInsets.only(top: 10.0),
+            child: Text(reports[index]['title']),
+          ),
           ButtonBar(
             alignment: MainAxisAlignment.center,
             children: <Widget>[
