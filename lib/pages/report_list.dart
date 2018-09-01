@@ -12,33 +12,39 @@ class ReportListPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListView.builder(
       itemBuilder: (BuildContext context, int index) {
-        return Column(
-          children: <Widget>[
-            ListTile(
-              leading: CircleAvatar(
-                backgroundImage: AssetImage(reports[index]['image']),
+        return Dismissible(
+          key: Key(reports[index]['title']),
+          background: Container(
+            color: Colors.red,
+          ),
+          child: Column(
+            children: <Widget>[
+              ListTile(
+                leading: CircleAvatar(
+                  backgroundImage: AssetImage(reports[index]['image']),
+                ),
+                title: Text(reports[index]['title']),
+                subtitle: Text('Rating : ${reports[index]['rate']}'),
+                trailing: IconButton(
+                  icon: Icon(Icons.edit),
+                  onPressed: () {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (BuildContext context) {
+                          return ReportEditPage(
+                            report: reports[index],
+                            updateReport: updateReport,
+                            reportIndex: index,
+                          );
+                        },
+                      ),
+                    );
+                  },
+                ),
               ),
-              title: Text(reports[index]['title']),
-              subtitle: Text('Rating : ${reports[index]['rate']}'),
-              trailing: IconButton(
-                icon: Icon(Icons.edit),
-                onPressed: () {
-                  Navigator.of(context).push(
-                    MaterialPageRoute(
-                      builder: (BuildContext context) {
-                        return ReportEditPage(
-                          report: reports[index],
-                          updateReport: updateReport,
-                          reportIndex: index,
-                        );
-                      },
-                    ),
-                  );
-                },
-              ),
-            ),
-            Divider(),
-          ],
+              Divider(),
+            ],
+          ),
         );
       },
       itemCount: reports.length,
