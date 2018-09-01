@@ -51,8 +51,7 @@ class _MyAppState extends State<MyApp> {
           if (pathElements[1] == 'report') {
             final int index = int.parse(pathElements[2]);
             return MaterialPageRoute<bool>(
-              builder: (BuildContext context) =>
-                  ReportPage(null, null, null, null),
+              builder: (BuildContext context) => ReportPage(index),
             );
           }
           return null;

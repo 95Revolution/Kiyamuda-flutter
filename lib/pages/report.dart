@@ -2,17 +2,18 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 
+import 'package:scoped_model/scoped_model.dart';
+
 import '../widgets/ui_elements/title_default.dart';
+import '../scoped-models/reports.dart';
+import '../models/report.dart';
 
 class ReportPage extends StatelessWidget {
-  final String title;
-  final String imageUrl;
-  final double rate;
-  final String description;
+  final int reportIndex;
 
-  ReportPage(this.title, this.imageUrl, this.rate, this.description);
+  ReportPage(this.reportIndex);
 
-  Widget _buildAddressRateRow() {
+  Widget _buildAddressRateRow(double rate) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
@@ -37,35 +38,37 @@ class ReportPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return WillPopScope(
-      onWillPop: () {
-        print('Back button pressed!');
-        Navigator.pop(context, false);
-        return Future.value(false);
-      },
-      child: Scaffold(
-        appBar: AppBar(
-          title: Text(title),
-        ),
-        body: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: <Widget>[
-            Image.asset(imageUrl),
-            Container(
-              padding: EdgeInsets.all(10.0),
-              child: TitleDefault(title),
-            ),
-            _buildAddressRateRow(),
-            Container(
-              padding: EdgeInsets.all(10.0),
-              child: Text(
-                description,
-                textAlign: TextAlign.center,
+    return WillPopScope(onWillPop: () {
+      print('Back button pressed!');
+      Navigator.pop(context, false);
+      return Future.value(false);
+    }, child: ScopedModelDescendant<ReportsModel>(
+      builder: (BuildContext context, Widget child, ReportsModel model) {
+        final Report report = model.reports[reportIndex];
+        return Scaffold(
+          appBar: AppBar(
+            title: Text(report.title),
+          ),
+          body: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: <Widget>[
+              Image.asset(report.image),
+              Container(
+                padding: EdgeInsets.all(10.0),
+                child: TitleDefault(report.title),
               ),
-            )
-          ],
-        ),
-      ),
-    );
+              _buildAddressRateRow(report.rate),
+              Container(
+                padding: EdgeInsets.all(10.0),
+                child: Text(
+                  report.description,
+                  textAlign: TextAlign.center,
+                ),
+              )
+            ],
+          ),
+        );
+      },
+    ));
   }
 }
