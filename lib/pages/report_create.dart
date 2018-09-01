@@ -15,11 +15,12 @@ class _ReportCreatePage extends State<ReportCreatePage> {
   String _titleValue;
   String _descriptionValue;
   double _rateValue;
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   Widget _buildTitleTextField() {
-    return TextField(
+    return TextFormField(
       decoration: InputDecoration(labelText: 'Report Title'),
-      onChanged: (String value) {
+      onSaved: (String value) {
         setState(() {
           _titleValue = value;
         });
@@ -28,10 +29,10 @@ class _ReportCreatePage extends State<ReportCreatePage> {
   }
 
   Widget _buildDescriptionTextField() {
-    return TextField(
+    return TextFormField(
       maxLines: 4,
       decoration: InputDecoration(labelText: 'Report Description'),
-      onChanged: (String value) {
+      onSaved: (String value) {
         setState(() {
           _descriptionValue = value;
         });
@@ -40,10 +41,10 @@ class _ReportCreatePage extends State<ReportCreatePage> {
   }
 
   Widget _buildRateTextField() {
-    return TextField(
+    return TextFormField(
       keyboardType: TextInputType.number,
       decoration: InputDecoration(labelText: 'Rate it'),
-      onChanged: (String value) {
+      onSaved: (String value) {
         setState(() {
           _rateValue = double.parse(value);
         });
@@ -52,6 +53,7 @@ class _ReportCreatePage extends State<ReportCreatePage> {
   }
 
   void _submitForm() {
+    _formKey.currentState.save();
     final Map<String, dynamic> report = {
       'title': _titleValue,
       'description': _descriptionValue,
@@ -69,21 +71,24 @@ class _ReportCreatePage extends State<ReportCreatePage> {
     final double targetPadding = deviceWidth - targetWidth;
     return Container(
       margin: EdgeInsets.all(10.0),
-      child: ListView(
-        padding: EdgeInsets.symmetric(horizontal: targetPadding / 2),
-        children: <Widget>[
-          _buildTitleTextField(),
-          _buildDescriptionTextField(),
-          _buildRateTextField(),
-          SizedBox(
-            height: 10.0,
-          ),
-          RaisedButton(
-            child: Text('Save'),
-            textColor: Colors.white,
-            onPressed: _submitForm,
-          )
-        ],
+      child: Form(
+        key: _formKey,
+        child: ListView(
+          padding: EdgeInsets.symmetric(horizontal: targetPadding / 2),
+          children: <Widget>[
+            _buildTitleTextField(),
+            _buildDescriptionTextField(),
+            _buildRateTextField(),
+            SizedBox(
+              height: 10.0,
+            ),
+            RaisedButton(
+              child: Text('Save'),
+              textColor: Colors.white,
+              onPressed: _submitForm,
+            )
+          ],
+        ),
       ),
     );
   }
