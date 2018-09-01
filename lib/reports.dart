@@ -12,7 +12,13 @@ class Reports extends StatelessWidget {
           Image.asset(reports[index]['image']),
           Container(
             padding: EdgeInsets.only(top: 10.0),
-            child: Text(reports[index]['title']),
+            child: Text(
+              reports[index]['title'],
+              style: TextStyle(
+                  fontSize: 26.0,
+                  fontWeight: FontWeight.bold,
+                  fontFamily: 'Oswald'),
+            ),
           ),
           ButtonBar(
             alignment: MainAxisAlignment.center,
