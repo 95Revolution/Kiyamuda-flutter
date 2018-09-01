@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 
+import './report_edit.dart';
+
 class ReportListPage extends StatelessWidget {
+  final Function updateReport;
   final List<Map<String, dynamic>> reports;
 
-  ReportListPage(this.reports);
+  ReportListPage(this.reports, this.updateReport);
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +19,19 @@ class ReportListPage extends StatelessWidget {
           title: Text(reports[index]['title']),
           trailing: IconButton(
             icon: Icon(Icons.edit),
-            onPressed: () {},
+            onPressed: () {
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (BuildContext context) {
+                    return ReportEditPage(
+                      report: reports[index],
+                      updateReport: updateReport,
+                      reportIndex: index,
+                    );
+                  },
+                ),
+              );
+            },
           ),
         );
       },

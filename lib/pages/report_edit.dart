@@ -1,17 +1,21 @@
 import 'package:flutter/material.dart';
 
-class ReportCreatePage extends StatefulWidget {
+class ReportEditPage extends StatefulWidget {
   final Function addReport;
+  final Function updateReport;
+  final Map<String, dynamic> report;
+  final int reportIndex;
 
-  ReportCreatePage(this.addReport);
+  ReportEditPage(
+      {this.addReport, this.updateReport, this.report, this.reportIndex});
 
   @override
   State<StatefulWidget> createState() {
-    return _ReportCreatePage();
+    return _ReportEditPage();
   }
 }
 
-class _ReportCreatePage extends State<ReportCreatePage> {
+class _ReportEditPage extends State<ReportEditPage> {
   final Map<String, dynamic> _formData = {
     'title': null,
     'description': null,
@@ -23,6 +27,7 @@ class _ReportCreatePage extends State<ReportCreatePage> {
   Widget _buildTitleTextField() {
     return TextFormField(
       decoration: InputDecoration(labelText: 'Report Title'),
+      initialValue: widget.report == null ? '' : widget.report['title'],
       validator: (String value) {
         if (value.isEmpty) {
           return 'Title is required';
@@ -38,6 +43,7 @@ class _ReportCreatePage extends State<ReportCreatePage> {
     return TextFormField(
       maxLines: 4,
       decoration: InputDecoration(labelText: 'Report Description'),
+      initialValue: widget.report == null ? '' : widget.report['description'],
       validator: (String value) {
         if (value.isEmpty || value.length < 10) {
           return 'Description is required and should be 10+ characters long';
@@ -53,6 +59,8 @@ class _ReportCreatePage extends State<ReportCreatePage> {
     return TextFormField(
       keyboardType: TextInputType.number,
       decoration: InputDecoration(labelText: 'Rate it'),
+      initialValue:
+          widget.report == null ? '' : widget.report['rate'].toString(),
       validator: (String value) {
         if (value.isEmpty ||
             !RegExp(r'^(?:[1-9]\d*|0)?(?:\.\d+)?$').hasMatch(value)) {
@@ -70,7 +78,11 @@ class _ReportCreatePage extends State<ReportCreatePage> {
       return;
     }
     _formKey.currentState.save();
-    widget.addReport(_formData);
+    if (widget.report == null) {
+      widget.addReport(_formData);
+    } else {
+      widget.updateReport(widget.reportIndex, _formData);
+    }
     Navigator.pushReplacementNamed(context, '/reports');
   }
 
@@ -79,7 +91,7 @@ class _ReportCreatePage extends State<ReportCreatePage> {
     final double deviceWidth = MediaQuery.of(context).size.width;
     final double targetWidth = deviceWidth > 550.0 ? 500.0 : deviceWidth * 0.95;
     final double targetPadding = deviceWidth - targetWidth;
-    return GestureDetector(
+    final Widget pageContent = GestureDetector(
       onTap: () {
         FocusScope.of(context).requestFocus(FocusNode());
       },
@@ -106,5 +118,13 @@ class _ReportCreatePage extends State<ReportCreatePage> {
         ),
       ),
     );
+    return widget.report == null
+        ? pageContent
+        : Scaffold(
+            appBar: AppBar(
+              title: Text('Edit Report'),
+            ),
+            body: pageContent,
+          );
   }
 }

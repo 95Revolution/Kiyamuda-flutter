@@ -29,6 +29,12 @@ class _MyAppState extends State<MyApp> {
     });
   }
 
+  void _updateReport(int index, Map<String, dynamic> report) {
+    setState(() {
+      _reports[index] = report;
+    });
+  }
+
   void _deleteReport(int index) {
     setState(() {
       _reports.removeAt(index);
@@ -50,7 +56,7 @@ class _MyAppState extends State<MyApp> {
         '/': (BuildContext context) => AuthPage(),
         '/reports': (BuildContext context) => ReportsPage(_reports),
         '/admin': (BuildContext context) =>
-            ReportsAdminPage(_addReport, _deleteReport, _reports)
+            ReportsAdminPage(_addReport, _updateReport, _deleteReport, _reports)
       },
       onGenerateRoute: (RouteSettings settings) {
         final List<String> pathElements = settings.name.split('/');
