@@ -56,7 +56,7 @@ class ReportsAdminPage extends StatelessWidget {
         body: TabBarView(
           children: <Widget>[
             ReportEditPage(addReport: addReport),
-            ReportListPage(reports, updateReport)
+            ReportListPage(reports, updateReport, deleteReport)
           ],
         ),
       ),

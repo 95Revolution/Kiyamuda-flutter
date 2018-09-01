@@ -4,9 +4,10 @@ import './report_edit.dart';
 
 class ReportListPage extends StatelessWidget {
   final Function updateReport;
+  final Function deleteReport;
   final List<Map<String, dynamic>> reports;
 
-  ReportListPage(this.reports, this.updateReport);
+  ReportListPage(this.reports, this.updateReport, this.deleteReport);
 
   @override
   Widget build(BuildContext context) {
@@ -14,6 +15,11 @@ class ReportListPage extends StatelessWidget {
       itemBuilder: (BuildContext context, int index) {
         return Dismissible(
           key: Key(reports[index]['title']),
+          onDismissed: (DismissDirection direction) {
+            if (direction == DismissDirection.endToStart) {
+              deleteReport(index);
+            }
+          },
           background: Container(
             color: Colors.red,
           ),
