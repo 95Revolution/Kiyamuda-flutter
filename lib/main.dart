@@ -45,7 +45,8 @@ class _MyAppState extends State<MyApp> {
           accentColor: Colors.deepPurple),
       //home: AuthPage(),
       routes: {
-        '/': (BuildContext context) => ReportsPage(_reports),
+        '/': (BuildContext context) => AuthPage(),
+        '/reports': (BuildContext context) => ReportsPage(_reports),
         '/admin': (BuildContext context) =>
             ReportsAdminPage(_addReport, _deleteReport)
       },

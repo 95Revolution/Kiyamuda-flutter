@@ -12,9 +12,9 @@ class ReportCreatePage extends StatefulWidget {
 }
 
 class _ReportCreatePage extends State<ReportCreatePage> {
-  String titleValue;
-  String descriptionValue;
-  double rateValue;
+  String _titleValue;
+  String _descriptionValue;
+  double _rateValue;
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +26,7 @@ class _ReportCreatePage extends State<ReportCreatePage> {
             decoration: InputDecoration(labelText: 'Report Title'),
             onChanged: (String value) {
               setState(() {
-                titleValue = value;
+                _titleValue = value;
               });
             },
           ),
@@ -35,7 +35,7 @@ class _ReportCreatePage extends State<ReportCreatePage> {
             decoration: InputDecoration(labelText: 'Report Description'),
             onChanged: (String value) {
               setState(() {
-                descriptionValue = value;
+                _descriptionValue = value;
               });
             },
           ),
@@ -44,20 +44,26 @@ class _ReportCreatePage extends State<ReportCreatePage> {
             decoration: InputDecoration(labelText: 'Rate it'),
             onChanged: (String value) {
               setState(() {
-                rateValue = double.parse(value);
+                _rateValue = double.parse(value);
               });
             },
           ),
+          SizedBox(
+            height: 10.0,
+          ),
           RaisedButton(
             child: Text('Save'),
+            color: Theme.of(context).accentColor,
+            textColor: Colors.white,
             onPressed: () {
               final Map<String, dynamic> report = {
-                'title': titleValue,
-                'description': descriptionValue,
-                'rate': rateValue,
+                'title': _titleValue,
+                'description': _descriptionValue,
+                'rate': _rateValue,
                 'image': 'assets/food.jpg'
               };
               widget.addReport(report);
+              Navigator.pushReplacementNamed(context, '/reports');
             },
           )
         ],
