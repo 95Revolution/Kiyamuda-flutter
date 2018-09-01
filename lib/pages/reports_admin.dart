@@ -22,9 +22,10 @@ class ReportsAdminPage extends StatelessWidget {
                 title: Text('Choose'),
               ),
               ListTile(
+                leading: Icon(Icons.rate_review),
                 title: Text('All Products'),
                 onTap: () {
-                  Navigator.pushReplacementNamed(context, '/');
+                  Navigator.pushReplacementNamed(context, '/reports');
                 },
               )
             ],

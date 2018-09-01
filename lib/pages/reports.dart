@@ -18,6 +18,7 @@ class ReportsPage extends StatelessWidget {
                 title: Text('Choose'),
               ),
               ListTile(
+                leading: Icon(Icons.edit),
                 title: Text('Manage Reports'),
                 onTap: () {
                   Navigator.pushReplacementNamed(context, '/admin');
