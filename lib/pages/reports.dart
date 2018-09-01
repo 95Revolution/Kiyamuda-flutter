@@ -29,6 +29,12 @@ class ReportsPage extends StatelessWidget {
         ),
         appBar: AppBar(
           title: Text('Kiyamuda'),
+          actions: <Widget>[
+            IconButton(
+              icon: Icon(Icons.favorite),
+              onPressed: () {},
+            )
+          ],
         ),
         body: ReportManager(reports));
   }
