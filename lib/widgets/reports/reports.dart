@@ -27,7 +27,7 @@ class Reports extends StatelessWidget {
   Widget build(BuildContext context) {
     return ScopedModelDescendant<ReportsModel>(
       builder: (BuildContext context, Widget child, ReportsModel model) {
-        return _buildReportList(model.reports);
+        return _buildReportList(model.displayedReports);
       },
     );
   }

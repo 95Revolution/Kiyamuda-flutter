@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 
+import 'package:scoped_model/scoped_model.dart';
+
 import './rate_tag.dart';
 import '../ui_elements/title_default.dart';
 import './address_tag.dart';
 import '../../models/report.dart';
+import '../../scoped-models/reports.dart';
 
 class ReportCard extends StatelessWidget {
   final Report report;
@@ -37,12 +40,20 @@ class ReportCard extends StatelessWidget {
           onPressed: () => Navigator.pushNamed<bool>(
               context, '/report/' + reportIndex.toString()),
         ),
-        IconButton(
-          icon: Icon(Icons.favorite_border),
-          color: Colors.red,
-          onPressed: () => Navigator.pushNamed<bool>(
-              context, '/report/' + reportIndex.toString()),
-        ),
+        ScopedModelDescendant<ReportsModel>(
+          builder: (BuildContext context, Widget child, ReportsModel model) {
+            return IconButton(
+              icon: Icon(model.reports[reportIndex].isFavorite
+                  ? Icons.favorite
+                  : Icons.favorite_border),
+              color: Colors.red,
+              onPressed: () {
+                model.selectReport(reportIndex);
+                model.toggleReportFavoriteStatus();
+              },
+            );
+          },
+        )
       ],
     );
   }

@@ -5,10 +5,12 @@ class Report {
   final String description;
   final double rate;
   final String image;
+  final bool isFavorite;
 
   Report(
       {@required this.title,
       @required this.description,
       @required this.rate,
-      @required this.image});
+      @required this.image,
+      this.isFavorite = false});
 }
