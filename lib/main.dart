@@ -8,6 +8,7 @@ import './pages/reports_admin.dart';
 import './pages/reports.dart';
 import './pages/report.dart';
 import './scoped-models/main.dart';
+import './models/report.dart';
 
 void main() {
   // debugPaintSizeEnabled = true;
@@ -49,9 +50,12 @@ class _MyAppState extends State<MyApp> {
             return null;
           }
           if (pathElements[1] == 'report') {
-            final int index = int.parse(pathElements[2]);
+            final String reportId = pathElements[2];
+            final Report report = model.allReports.firstWhere((Report report) {
+              return report.id == reportId;
+            });
             return MaterialPageRoute<bool>(
-              builder: (BuildContext context) => ReportPage(index),
+              builder: (BuildContext context) => ReportPage(report),
             );
           }
           return null;

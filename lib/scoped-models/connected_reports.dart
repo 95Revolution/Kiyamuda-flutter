@@ -9,7 +9,7 @@ import '../models/user.dart';
 
 class ConnectedReportsModel extends Model {
   List<Report> _reports = [];
-  int _selReportIndex;
+  String _selReportId;
   User _authenticatedUser;
   bool _isLoading = false;
 
@@ -61,14 +61,22 @@ class ReportsModel extends ConnectedReportsModel {
   }
 
   int get selectedReportIndex {
-    return _selReportIndex;
+    return _reports.indexWhere((Report report) {
+      return report.id == _selReportId;
+    });
+  }
+
+  String get selectedReportId {
+    return _selReportId;
   }
 
   Report get selectedReport {
-    if (selectedReportIndex == null) {
+    if (selectedReportId == null) {
       return null;
     }
-    return _reports[selectedReportIndex];
+    return _reports.firstWhere((Report report) {
+      return report.id == _selReportId;
+    });
   }
 
   bool get dispalyFavoritesOnly {
@@ -112,7 +120,7 @@ class ReportsModel extends ConnectedReportsModel {
     _isLoading = true;
     final deletedReportId = selectedReport.id;
     _reports.removeAt(selectedReportIndex);
-    _selReportIndex = null;
+    _selReportId = null;
     notifyListeners();
     http
         .delete(
@@ -158,6 +166,7 @@ class ReportsModel extends ConnectedReportsModel {
     final bool isCurrentlyFavorite = selectedReport.isFavorite;
     final bool newFavoriteStatus = !isCurrentlyFavorite;
     final Report updatedReport = Report(
+        id: selectedReport.id,
         title: selectedReport.title,
         description: selectedReport.description,
         image: selectedReport.image,
@@ -169,8 +178,8 @@ class ReportsModel extends ConnectedReportsModel {
     notifyListeners();
   }
 
-  void selectReport(int index) {
-    _selReportIndex = index;
+  void selectReport(String reportId) {
+    _selReportId = reportId;
     notifyListeners();
   }
 

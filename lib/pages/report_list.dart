@@ -26,7 +26,7 @@ class _ReportListPageState extends State<ReportListPage> {
     return IconButton(
       icon: Icon(Icons.edit),
       onPressed: () {
-        model.selectReport(index);
+        model.selectReport(model.allReports[index].id);
         Navigator.of(context).push(
           MaterialPageRoute(
             builder: (BuildContext context) {
@@ -50,7 +50,7 @@ class _ReportListPageState extends State<ReportListPage> {
               key: Key(model.allReports[index].title),
               onDismissed: (DismissDirection direction) {
                 if (direction == DismissDirection.endToStart) {
-                  model.selectReport(index);
+                  model.selectReport(model.allReports[index].id);
                   model.deleteReport();
                 }
               },
