@@ -124,10 +124,10 @@ class ReportsModel extends ConnectedReportsModel {
     });
   }
 
-  void fetchReports() {
+  Future<Null> fetchReports() {
     _isLoading = true;
     notifyListeners();
-    http
+    return http
         .get('https://kiyamuda-flutter.firebaseio.com/reports.json')
         .then((http.Response response) {
       final List<Report> fetchReportList = [];

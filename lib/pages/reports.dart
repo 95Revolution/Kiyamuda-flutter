@@ -56,7 +56,10 @@ class _ReportsPageState extends State<ReportsPage> {
             child: CircularProgressIndicator(),
           );
         }
-        return content;
+        return RefreshIndicator(
+          onRefresh: model.fetchReports,
+          child: content,
+        );
       },
     );
   }
