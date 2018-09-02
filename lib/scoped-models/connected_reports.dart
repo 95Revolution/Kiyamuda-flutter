@@ -75,24 +75,53 @@ class ReportsModel extends ConnectedReportsModel {
     return _showFavorites;
   }
 
-  void updateReport(
+  Future<Null> updateReport(
       String title, String description, String image, double rate) {
-    final Report updatedReport = Report(
-        title: title,
-        description: description,
-        image: image,
-        rate: rate,
-        userEmail: selectedReport.userEmail,
-        userId: selectedReport.userId);
-    _reports[selectedReportIndex] = updatedReport;
-
+    _isLoading = true;
     notifyListeners();
+    final Map<String, dynamic> updateData = {
+      'title': title,
+      'description': description,
+      'image':
+          'http://blog.reship.com/wp-content/uploads/2016/06/Best-Product-Review-Sites.jpg',
+      'rate': rate,
+      'userEmail': selectedReport.userEmail,
+      'userId': selectedReport.userId
+    };
+    return http
+        .put(
+            'https://kiyamuda-flutter.firebaseio.com/reports/${selectedReport.id}.json',
+            body: json.encode(updateData))
+        .then((http.Response response) {
+      _isLoading = false;
+      final Report updatedReport = Report(
+          id: selectedReport.id,
+          title: title,
+          description: description,
+          image: image,
+          rate: rate,
+          userEmail: selectedReport.userEmail,
+          userId: selectedReport.userId);
+      _reports[selectedReportIndex] = updatedReport;
+
+      notifyListeners();
+    });
   }
 
   void deleteReport() {
+    _isLoading = true;
+    final deletedReportId = selectedReport.id;
     _reports.removeAt(selectedReportIndex);
-
+    _selReportIndex = null;
     notifyListeners();
+    http
+        .delete(
+            'https://kiyamuda-flutter.firebaseio.com/reports/$deletedReportId.json')
+        .then((http.Response response) {
+      _isLoading = false;
+
+      notifyListeners();
+    });
   }
 
   void fetchReports() {

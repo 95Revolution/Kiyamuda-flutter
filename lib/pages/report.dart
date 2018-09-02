@@ -52,7 +52,7 @@ class ReportPage extends StatelessWidget {
           body: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
-              Image.asset(report.image),
+              Image.network(report.image),
               Container(
                 padding: EdgeInsets.all(10.0),
                 child: TitleDefault(report.title),

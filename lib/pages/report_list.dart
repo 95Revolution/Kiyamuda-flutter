@@ -5,7 +5,23 @@ import 'package:scoped_model/scoped_model.dart';
 import './report_edit.dart';
 import '../scoped-models/main.dart';
 
-class ReportListPage extends StatelessWidget {
+class ReportListPage extends StatefulWidget {
+  final MainModel model;
+
+  ReportListPage(this.model);
+  @override
+  State<StatefulWidget> createState() {
+    return _ReportListPageState();
+  }
+}
+
+class _ReportListPageState extends State<ReportListPage> {
+  @override
+  initState() {
+    widget.model.fetchReports();
+    super.initState();
+  }
+
   Widget _buildEditButton(BuildContext context, int index, MainModel model) {
     return IconButton(
       icon: Icon(Icons.edit),

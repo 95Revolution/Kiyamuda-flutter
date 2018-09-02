@@ -156,7 +156,9 @@ class _ReportEditPage extends State<ReportEditPage> {
         _formData['description'],
         _formData['image'],
         _formData['rate'],
-      );
+      ).then((_) => Navigator
+          .pushReplacementNamed(context, '/reports')
+          .then((_) => setSelectedReport(null)));
     }
   }
 
