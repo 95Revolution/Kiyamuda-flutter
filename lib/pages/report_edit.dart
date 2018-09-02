@@ -88,12 +88,19 @@ class _ReportEditPage extends State<ReportEditPage> {
   Widget _buildSubmitButton() {
     return ScopedModelDescendant<MainModel>(
       builder: (BuildContext context, Widget child, MainModel model) {
-        return RaisedButton(
-          child: Text('Save'),
-          textColor: Colors.white,
-          onPressed: () => _submitForm(model.addReport, model.updateReport,
-              model.selectReport, model.selectedReportIndex),
-        );
+        return model.isLoading
+            ? Center(
+                child: CircularProgressIndicator(),
+              )
+            : RaisedButton(
+                child: Text('Save'),
+                textColor: Colors.white,
+                onPressed: () => _submitForm(
+                    model.addReport,
+                    model.updateReport,
+                    model.selectReport,
+                    model.selectedReportIndex),
+              );
       },
     );
   }
@@ -140,7 +147,9 @@ class _ReportEditPage extends State<ReportEditPage> {
         _formData['description'],
         _formData['image'],
         _formData['rate'],
-      );
+      ).then((_) => Navigator
+          .pushReplacementNamed(context, '/reports')
+          .then((_) => setSelectedReport(null)));
     } else {
       updateReport(
         _formData['title'],
@@ -149,9 +158,6 @@ class _ReportEditPage extends State<ReportEditPage> {
         _formData['rate'],
       );
     }
-    Navigator
-        .pushReplacementNamed(context, '/reports')
-        .then((_) => setSelectedReport(null));
   }
 
   @override

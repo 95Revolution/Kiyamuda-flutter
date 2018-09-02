@@ -43,6 +43,24 @@ class _ReportsPageState extends State<ReportsPage> {
     );
   }
 
+  Widget _buildReportsList() {
+    return ScopedModelDescendant<MainModel>(
+      builder: (BuildContext context, Widget child, MainModel model) {
+        Widget content = Center(
+          child: Text('No Reports Found!'),
+        );
+        if (model.displayedReports.length > 0 && !model.isLoading) {
+          content = Reports();
+        } else if (model.isLoading) {
+          content = Center(
+            child: CircularProgressIndicator(),
+          );
+        }
+        return content;
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -64,7 +82,7 @@ class _ReportsPageState extends State<ReportsPage> {
           )
         ],
       ),
-      body: Reports(),
+      body: _buildReportsList(),
     );
   }
 }

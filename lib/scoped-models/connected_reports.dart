@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:async';
 
 import 'package:scoped_model/scoped_model.dart';
 import 'package:http/http.dart' as http;
@@ -10,8 +11,12 @@ class ConnectedReportsModel extends Model {
   List<Report> _reports = [];
   int _selReportIndex;
   User _authenticatedUser;
+  bool _isLoading = false;
 
-  void addReport(String title, String description, String image, double rate) {
+  Future<Null> addReport(
+      String title, String description, String image, double rate) {
+    _isLoading = true;
+    notifyListeners();
     final Map<String, dynamic> reportData = {
       'title': title,
       'description': description,
@@ -21,7 +26,7 @@ class ConnectedReportsModel extends Model {
       'userEmail': _authenticatedUser.email,
       'userId': _authenticatedUser.id
     };
-    http
+    return http
         .post('https://kiyamuda-flutter.firebaseio.com/reports.json',
             body: json.encode(reportData))
         .then((http.Response response) {
@@ -35,6 +40,7 @@ class ConnectedReportsModel extends Model {
           userEmail: _authenticatedUser.email,
           userId: _authenticatedUser.id);
       _reports.add(newReport);
+      _isLoading = false;
       notifyListeners();
     });
   }
@@ -90,11 +96,18 @@ class ReportsModel extends ConnectedReportsModel {
   }
 
   void fetchReports() {
+    _isLoading = true;
+    notifyListeners();
     http
         .get('https://kiyamuda-flutter.firebaseio.com/reports.json')
         .then((http.Response response) {
       final List<Report> fetchReportList = [];
       final Map<String, dynamic> reportListData = json.decode(response.body);
+      if (reportListData == null) {
+        _isLoading = false;
+        notifyListeners();
+        return;
+      }
       reportListData.forEach((String reportId, dynamic reportData) {
         final Report report = Report(
             id: reportId,
@@ -107,6 +120,7 @@ class ReportsModel extends ConnectedReportsModel {
         fetchReportList.add(report);
       });
       _reports = fetchReportList;
+      _isLoading = false;
       notifyListeners();
     });
   }
@@ -141,5 +155,11 @@ class UserModel extends ConnectedReportsModel {
   void login(String email, String password) {
     _authenticatedUser =
         User(id: 'ahgshagsh', email: email, password: password);
+  }
+}
+
+class UtilityModel extends ConnectedReportsModel {
+  bool get isLoading {
+    return _isLoading;
   }
 }
