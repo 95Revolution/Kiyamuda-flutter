@@ -4,7 +4,7 @@ import 'package:scoped_model/scoped_model.dart';
 
 import './report_card.dart';
 import '../../models/report.dart';
-import '../../scoped-models/reports.dart';
+import '../../scoped-models/main.dart';
 
 class Reports extends StatelessWidget {
   Widget _buildReportList(List<Report> reports) {
@@ -25,8 +25,8 @@ class Reports extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ScopedModelDescendant<ReportsModel>(
-      builder: (BuildContext context, Widget child, ReportsModel model) {
+    return ScopedModelDescendant<MainModel>(
+      builder: (BuildContext context, Widget child, MainModel model) {
         return _buildReportList(model.displayedReports);
       },
     );

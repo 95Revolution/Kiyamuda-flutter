@@ -3,10 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:scoped_model/scoped_model.dart';
 
 import './report_edit.dart';
-import '../scoped-models/reports.dart';
+import '../scoped-models/main.dart';
 
 class ReportListPage extends StatelessWidget {
-  Widget _buildEditButton(BuildContext context, int index, ReportsModel model) {
+  Widget _buildEditButton(BuildContext context, int index, MainModel model) {
     return IconButton(
       icon: Icon(Icons.edit),
       onPressed: () {
@@ -24,8 +24,8 @@ class ReportListPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ScopedModelDescendant<ReportsModel>(
-      builder: (BuildContext context, Widget child, ReportsModel model) {
+    return ScopedModelDescendant<MainModel>(
+      builder: (BuildContext context, Widget child, MainModel model) {
         return ListView.builder(
           itemBuilder: (BuildContext context, int index) {
             return Dismissible(

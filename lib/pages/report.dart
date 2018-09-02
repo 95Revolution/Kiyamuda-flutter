@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:scoped_model/scoped_model.dart';
 
 import '../widgets/ui_elements/title_default.dart';
-import '../scoped-models/reports.dart';
+import '../scoped-models/main.dart';
 import '../models/report.dart';
 
 class ReportPage extends StatelessWidget {
@@ -42,8 +42,8 @@ class ReportPage extends StatelessWidget {
       print('Back button pressed!');
       Navigator.pop(context, false);
       return Future.value(false);
-    }, child: ScopedModelDescendant<ReportsModel>(
-      builder: (BuildContext context, Widget child, ReportsModel model) {
+    }, child: ScopedModelDescendant<MainModel>(
+      builder: (BuildContext context, Widget child, MainModel model) {
         final Report report = model.reports[reportIndex];
         return Scaffold(
           appBar: AppBar(

@@ -4,7 +4,7 @@ import 'package:scoped_model/scoped_model.dart';
 
 import '../widgets/helpers/ensure-visible.dart';
 import '../models/report.dart';
-import '../scoped-models/reports.dart';
+import '../scoped-models/main.dart';
 
 class ReportEditPage extends StatefulWidget {
   @override
@@ -86,8 +86,8 @@ class _ReportEditPage extends State<ReportEditPage> {
   }
 
   Widget _buildSubmitButton() {
-    return ScopedModelDescendant<ReportsModel>(
-      builder: (BuildContext context, Widget child, ReportsModel model) {
+    return ScopedModelDescendant<MainModel>(
+      builder: (BuildContext context, Widget child, MainModel model) {
         return RaisedButton(
           child: Text('Save'),
           textColor: Colors.white,
@@ -151,8 +151,8 @@ class _ReportEditPage extends State<ReportEditPage> {
 
   @override
   Widget build(BuildContext context) {
-    return ScopedModelDescendant<ReportsModel>(
-      builder: (BuildContext context, Widget child, ReportsModel model) {
+    return ScopedModelDescendant<MainModel>(
+      builder: (BuildContext context, Widget child, MainModel model) {
         final Widget pageContent =
             _buildPageContent(context, model.selectedReport);
         return model.selectedReportIndex == null

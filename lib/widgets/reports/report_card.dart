@@ -6,7 +6,7 @@ import './rate_tag.dart';
 import '../ui_elements/title_default.dart';
 import './address_tag.dart';
 import '../../models/report.dart';
-import '../../scoped-models/reports.dart';
+import '../../scoped-models/main.dart';
 
 class ReportCard extends StatelessWidget {
   final Report report;
@@ -40,8 +40,8 @@ class ReportCard extends StatelessWidget {
           onPressed: () => Navigator.pushNamed<bool>(
               context, '/report/' + reportIndex.toString()),
         ),
-        ScopedModelDescendant<ReportsModel>(
-          builder: (BuildContext context, Widget child, ReportsModel model) {
+        ScopedModelDescendant<MainModel>(
+          builder: (BuildContext context, Widget child, MainModel model) {
             return IconButton(
               icon: Icon(model.reports[reportIndex].isFavorite
                   ? Icons.favorite

@@ -7,7 +7,7 @@ import './pages/auth.dart';
 import './pages/reports_admin.dart';
 import './pages/reports.dart';
 import './pages/report.dart';
-import './scoped-models/reports.dart';
+import './scoped-models/main.dart';
 
 void main() {
   // debugPaintSizeEnabled = true;
@@ -26,8 +26,8 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
-    return ScopedModel<ReportsModel>(
-      model: ReportsModel(),
+    return ScopedModel<MainModel>(
+      model: MainModel(),
       child: MaterialApp(
         // debugShowMaterialGrid: true,
         theme: ThemeData(
