@@ -44,7 +44,7 @@ class ReportPage extends StatelessWidget {
       return Future.value(false);
     }, child: ScopedModelDescendant<MainModel>(
       builder: (BuildContext context, Widget child, MainModel model) {
-        final Report report = model.reports[reportIndex];
+        final Report report = model.allReports[reportIndex];
         return Scaffold(
           appBar: AppBar(
             title: Text(report.title),

@@ -17,7 +17,9 @@ class ReportListPage extends StatelessWidget {
               return ReportEditPage();
             },
           ),
-        );
+        ).then((_) {
+          model.selectReport(null);
+        });
       },
     );
   }
@@ -29,7 +31,7 @@ class ReportListPage extends StatelessWidget {
         return ListView.builder(
           itemBuilder: (BuildContext context, int index) {
             return Dismissible(
-              key: Key(model.reports[index].title),
+              key: Key(model.allReports[index].title),
               onDismissed: (DismissDirection direction) {
                 if (direction == DismissDirection.endToStart) {
                   model.selectReport(index);
@@ -43,10 +45,11 @@ class ReportListPage extends StatelessWidget {
                 children: <Widget>[
                   ListTile(
                     leading: CircleAvatar(
-                      backgroundImage: AssetImage(model.reports[index].image),
+                      backgroundImage:
+                          AssetImage(model.allReports[index].image),
                     ),
-                    title: Text(model.reports[index].title),
-                    subtitle: Text('Rating : ${model.reports[index].rate}'),
+                    title: Text(model.allReports[index].title),
+                    subtitle: Text('Rating : ${model.allReports[index].rate}'),
                     trailing: _buildEditButton(context, index, model),
                   ),
                   Divider(),
@@ -54,7 +57,7 @@ class ReportListPage extends StatelessWidget {
               ),
             );
           },
-          itemCount: model.reports.length,
+          itemCount: model.allReports.length,
         );
       },
     );

@@ -43,7 +43,7 @@ class ReportCard extends StatelessWidget {
         ScopedModelDescendant<MainModel>(
           builder: (BuildContext context, Widget child, MainModel model) {
             return IconButton(
-              icon: Icon(model.reports[reportIndex].isFavorite
+              icon: Icon(model.allReports[reportIndex].isFavorite
                   ? Icons.favorite
                   : Icons.favorite_border),
               color: Colors.red,
@@ -66,6 +66,7 @@ class ReportCard extends StatelessWidget {
           Image.asset(report.image),
           _buildTitleRateRow(),
           AddressTag('Lake Round, Kurunegala'),
+          Text(report.userEmail),
           _buildActionButtons(context),
         ],
       ),

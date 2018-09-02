@@ -91,8 +91,8 @@ class _ReportEditPage extends State<ReportEditPage> {
         return RaisedButton(
           child: Text('Save'),
           textColor: Colors.white,
-          onPressed: () => _submitForm(
-              model.addReport, model.updateReport, model.selectedReportIndex),
+          onPressed: () => _submitForm(model.addReport, model.updateReport,
+              model.selectReport, model.selectedReportIndex),
         );
       },
     );
@@ -127,26 +127,31 @@ class _ReportEditPage extends State<ReportEditPage> {
     );
   }
 
-  void _submitForm(Function addReport, Function updateReport,
+  void _submitForm(
+      Function addReport, Function updateReport, Function setSelectedReport,
       [int selectedReportIndex]) {
     if (!_formKey.currentState.validate()) {
       return;
     }
     _formKey.currentState.save();
     if (selectedReportIndex == null) {
-      addReport(Report(
-          title: _formData['title'],
-          description: _formData['description'],
-          rate: _formData['rate'],
-          image: _formData['image']));
+      addReport(
+        _formData['title'],
+        _formData['description'],
+        _formData['image'],
+        _formData['rate'],
+      );
     } else {
-      updateReport(Report(
-          title: _formData['title'],
-          description: _formData['description'],
-          rate: _formData['rate'],
-          image: _formData['image']));
+      updateReport(
+        _formData['title'],
+        _formData['description'],
+        _formData['image'],
+        _formData['rate'],
+      );
     }
-    Navigator.pushReplacementNamed(context, '/reports');
+    Navigator
+        .pushReplacementNamed(context, '/reports')
+        .then((_) => setSelectedReport(null));
   }
 
   @override
