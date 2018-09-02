@@ -1,4 +1,7 @@
+import 'dart:convert';
+
 import 'package:scoped_model/scoped_model.dart';
+import 'package:http/http.dart' as http;
 
 import '../models/report.dart';
 import '../models/user.dart';
@@ -9,15 +12,31 @@ class ConnectedReportsModel extends Model {
   User _authenticatedUser;
 
   void addReport(String title, String description, String image, double rate) {
-    final Report newReport = Report(
-        title: title,
-        description: description,
-        image: image,
-        rate: rate,
-        userEmail: _authenticatedUser.email,
-        userId: _authenticatedUser.id);
-    _reports.add(newReport);
-    notifyListeners();
+    final Map<String, dynamic> reportData = {
+      'title': title,
+      'description': description,
+      'image':
+          'http://blog.reship.com/wp-content/uploads/2016/06/Best-Product-Review-Sites.jpg',
+      'rate': rate,
+      'userEmail': _authenticatedUser.email,
+      'userId': _authenticatedUser.id
+    };
+    http
+        .post('https://kiyamuda-flutter.firebaseio.com/reports.json',
+            body: json.encode(reportData))
+        .then((http.Response response) {
+      final Map<String, dynamic> responseData = json.decode(response.body);
+      final Report newReport = Report(
+          id: responseData['name'],
+          title: title,
+          description: description,
+          image: image,
+          rate: rate,
+          userEmail: _authenticatedUser.email,
+          userId: _authenticatedUser.id);
+      _reports.add(newReport);
+      notifyListeners();
+    });
   }
 }
 
@@ -68,6 +87,28 @@ class ReportsModel extends ConnectedReportsModel {
     _reports.removeAt(selectedReportIndex);
 
     notifyListeners();
+  }
+
+  void fetchReports() {
+    http
+        .get('https://kiyamuda-flutter.firebaseio.com/reports.json')
+        .then((http.Response response) {
+      final List<Report> fetchReportList = [];
+      final Map<String, dynamic> reportListData = json.decode(response.body);
+      reportListData.forEach((String reportId, dynamic reportData) {
+        final Report report = Report(
+            id: reportId,
+            title: reportData['title'],
+            description: reportData['description'],
+            image: reportData['image'],
+            rate: reportData['rate'],
+            userEmail: reportData['userEmail'],
+            userId: reportData['userId']);
+        fetchReportList.add(report);
+      });
+      _reports = fetchReportList;
+      notifyListeners();
+    });
   }
 
   void toggleReportFavoriteStatus() {

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 class Report {
+  final String id;
   final String title;
   final String description;
   final double rate;
@@ -10,7 +11,8 @@ class Report {
   final String userId;
 
   Report(
-      {@required this.title,
+      {@required this.id,
+      @required this.title,
       @required this.description,
       @required this.rate,
       @required this.image,

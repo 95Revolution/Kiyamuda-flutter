@@ -5,7 +5,24 @@ import 'package:scoped_model/scoped_model.dart';
 import '../widgets/reports/reports.dart';
 import '../scoped-models/main.dart';
 
-class ReportsPage extends StatelessWidget {
+class ReportsPage extends StatefulWidget {
+  final MainModel model;
+
+  ReportsPage(this.model);
+
+  @override
+  State<StatefulWidget> createState() {
+    return _ReportsPageState();
+  }
+}
+
+class _ReportsPageState extends State<ReportsPage> {
+  @override
+  initState() {
+    widget.model.fetchReports();
+    super.initState();
+  }
+
   Widget _buildSideDrawer(BuildContext context) {
     return Drawer(
       child: Column(

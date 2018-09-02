@@ -46,7 +46,7 @@ class ReportListPage extends StatelessWidget {
                   ListTile(
                     leading: CircleAvatar(
                       backgroundImage:
-                          AssetImage(model.allReports[index].image),
+                          NetworkImage(model.allReports[index].image),
                     ),
                     title: Text(model.allReports[index].title),
                     subtitle: Text('Rating : ${model.allReports[index].rate}'),

@@ -63,7 +63,7 @@ class ReportCard extends StatelessWidget {
     return Card(
       child: Column(
         children: <Widget>[
-          Image.asset(report.image),
+          Image.network(report.image),
           _buildTitleRateRow(),
           AddressTag('Lake Round, Kurunegala'),
           Text(report.userEmail),
