@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 
+import 'package:scoped_model/scoped_model.dart';
+
 import '../widgets/reports/reports.dart';
+import '../scoped-models/main.dart';
 
 class ReportsPage extends StatelessWidget {
-  final List<Map<String, dynamic>> reports;
-
-  ReportsPage(this.reports);
-
   Widget _buildSideDrawer(BuildContext context) {
     return Drawer(
       child: Column(
@@ -34,13 +33,21 @@ class ReportsPage extends StatelessWidget {
       appBar: AppBar(
         title: Text('Kiyamuda'),
         actions: <Widget>[
-          IconButton(
-            icon: Icon(Icons.favorite),
-            onPressed: () {},
+          ScopedModelDescendant<MainModel>(
+            builder: (BuildContext context, Widget child, MainModel model) {
+              return IconButton(
+                icon: Icon(model.dispalyFavoritesOnly
+                    ? Icons.favorite
+                    : Icons.favorite_border),
+                onPressed: () {
+                  model.toggleDisplayMode();
+                },
+              );
+            },
           )
         ],
       ),
-      body: Reports(reports),
+      body: Reports(),
     );
   }
 }

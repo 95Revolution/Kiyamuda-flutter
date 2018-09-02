@@ -4,14 +4,6 @@ import './report_edit.dart';
 import './report_list.dart';
 
 class ReportsAdminPage extends StatelessWidget {
-  final Function addReport;
-  final Function updateReport;
-  final Function deleteReport;
-  final List<Map<String, dynamic>> reports;
-
-  ReportsAdminPage(
-      this.addReport, this.updateReport, this.deleteReport, this.reports);
-
   Widget _buildSideDrawer(BuildContext context) {
     return Drawer(
       child: Column(
@@ -54,10 +46,7 @@ class ReportsAdminPage extends StatelessWidget {
           ),
         ),
         body: TabBarView(
-          children: <Widget>[
-            ReportEditPage(addReport: addReport),
-            ReportListPage(reports, updateReport, deleteReport)
-          ],
+          children: <Widget>[ReportEditPage(), ReportListPage()],
         ),
       ),
     );

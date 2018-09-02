@@ -1,16 +1,12 @@
 import 'package:flutter/material.dart';
 
+import 'package:scoped_model/scoped_model.dart';
+
 import '../widgets/helpers/ensure-visible.dart';
+import '../models/report.dart';
+import '../scoped-models/main.dart';
 
 class ReportEditPage extends StatefulWidget {
-  final Function addReport;
-  final Function updateReport;
-  final Map<String, dynamic> report;
-  final int reportIndex;
-
-  ReportEditPage(
-      {this.addReport, this.updateReport, this.report, this.reportIndex});
-
   @override
   State<StatefulWidget> createState() {
     return _ReportEditPage();
@@ -29,13 +25,13 @@ class _ReportEditPage extends State<ReportEditPage> {
   final _descriptionFocusNode = FocusNode();
   final _rateFocusNode = FocusNode();
 
-  Widget _buildTitleTextField() {
+  Widget _buildTitleTextField(Report report) {
     return EnsureVisibleWhenFocused(
       focusNode: _titleFocusNode,
       child: TextFormField(
         focusNode: _titleFocusNode,
         decoration: InputDecoration(labelText: 'Report Title'),
-        initialValue: widget.report == null ? '' : widget.report['title'],
+        initialValue: report == null ? '' : report.title,
         validator: (String value) {
           if (value.isEmpty) {
             return 'Title is required';
@@ -48,14 +44,14 @@ class _ReportEditPage extends State<ReportEditPage> {
     );
   }
 
-  Widget _buildDescriptionTextField() {
+  Widget _buildDescriptionTextField(Report report) {
     return EnsureVisibleWhenFocused(
       focusNode: _descriptionFocusNode,
       child: TextFormField(
         focusNode: _descriptionFocusNode,
         maxLines: 4,
         decoration: InputDecoration(labelText: 'Report Description'),
-        initialValue: widget.report == null ? '' : widget.report['description'],
+        initialValue: report == null ? '' : report.description,
         validator: (String value) {
           if (value.isEmpty || value.length < 10) {
             return 'Description is required and should be 10+ characters long';
@@ -68,15 +64,14 @@ class _ReportEditPage extends State<ReportEditPage> {
     );
   }
 
-  Widget _buildRateTextField() {
+  Widget _buildRateTextField(Report report) {
     return EnsureVisibleWhenFocused(
       focusNode: _rateFocusNode,
       child: TextFormField(
         focusNode: _rateFocusNode,
         keyboardType: TextInputType.number,
         decoration: InputDecoration(labelText: 'Rate it'),
-        initialValue:
-            widget.report == null ? '' : widget.report['rate'].toString(),
+        initialValue: report == null ? '' : report.rate.toString(),
         validator: (String value) {
           if (value.isEmpty ||
               !RegExp(r'^(?:[1-9]\d*|0)?(?:\.\d+)?$').hasMatch(value)) {
@@ -90,7 +85,20 @@ class _ReportEditPage extends State<ReportEditPage> {
     );
   }
 
-  Widget _buildPageContent(BuildContext context) {
+  Widget _buildSubmitButton() {
+    return ScopedModelDescendant<MainModel>(
+      builder: (BuildContext context, Widget child, MainModel model) {
+        return RaisedButton(
+          child: Text('Save'),
+          textColor: Colors.white,
+          onPressed: () => _submitForm(model.addReport, model.updateReport,
+              model.selectReport, model.selectedReportIndex),
+        );
+      },
+    );
+  }
+
+  Widget _buildPageContent(BuildContext context, Report report) {
     final double deviceWidth = MediaQuery.of(context).size.width;
     final double targetWidth = deviceWidth > 550.0 ? 500.0 : deviceWidth * 0.95;
     final double targetPadding = deviceWidth - targetWidth;
@@ -105,17 +113,13 @@ class _ReportEditPage extends State<ReportEditPage> {
           child: ListView(
             padding: EdgeInsets.symmetric(horizontal: targetPadding / 2),
             children: <Widget>[
-              _buildTitleTextField(),
-              _buildDescriptionTextField(),
-              _buildRateTextField(),
+              _buildTitleTextField(report),
+              _buildDescriptionTextField(report),
+              _buildRateTextField(report),
               SizedBox(
                 height: 10.0,
               ),
-              RaisedButton(
-                child: Text('Save'),
-                textColor: Colors.white,
-                onPressed: _submitForm,
-              )
+              _buildSubmitButton(),
             ],
           ),
         ),
@@ -123,29 +127,48 @@ class _ReportEditPage extends State<ReportEditPage> {
     );
   }
 
-  void _submitForm() {
+  void _submitForm(
+      Function addReport, Function updateReport, Function setSelectedReport,
+      [int selectedReportIndex]) {
     if (!_formKey.currentState.validate()) {
       return;
     }
     _formKey.currentState.save();
-    if (widget.report == null) {
-      widget.addReport(_formData);
+    if (selectedReportIndex == null) {
+      addReport(
+        _formData['title'],
+        _formData['description'],
+        _formData['image'],
+        _formData['rate'],
+      );
     } else {
-      widget.updateReport(widget.reportIndex, _formData);
+      updateReport(
+        _formData['title'],
+        _formData['description'],
+        _formData['image'],
+        _formData['rate'],
+      );
     }
-    Navigator.pushReplacementNamed(context, '/reports');
+    Navigator
+        .pushReplacementNamed(context, '/reports')
+        .then((_) => setSelectedReport(null));
   }
 
   @override
   Widget build(BuildContext context) {
-    final Widget pageContent = _buildPageContent(context);
-    return widget.report == null
-        ? pageContent
-        : Scaffold(
-            appBar: AppBar(
-              title: Text('Edit Report'),
-            ),
-            body: pageContent,
-          );
+    return ScopedModelDescendant<MainModel>(
+      builder: (BuildContext context, Widget child, MainModel model) {
+        final Widget pageContent =
+            _buildPageContent(context, model.selectedReport);
+        return model.selectedReportIndex == null
+            ? pageContent
+            : Scaffold(
+                appBar: AppBar(
+                  title: Text('Edit Report'),
+                ),
+                body: pageContent,
+              );
+      },
+    );
   }
 }
