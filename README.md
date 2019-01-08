@@ -75,4 +75,5 @@ class MyApp extends StatelessWidget {
 Visit our [project board](https://github.com/95Revolution/Kiyamuda-pwa/projects/1) to get the latest details about the Kiyamuda portal
 
 ## License
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/723b0fbe52c1418a8c9d24cbd0cfca64)](https://app.codacy.com/app/DevDHera/Kiyamuda-flutter?utm_source=github.com&utm_medium=referral&utm_content=95Revolution/Kiyamuda-flutter&utm_campaign=Badge_Grade_Dashboard)
 [![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2F95Revolution%2FKiyamuda-flutter.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2F95Revolution%2FKiyamuda-flutter?ref=badge_large)
